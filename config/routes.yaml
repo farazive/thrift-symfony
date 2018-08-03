@@ -1,0 +1,12 @@
+OverblogThriftBundle:
+  resource: "@OverblogThriftBundle/Resources/config/routing.yml"
+  prefix:   /
+
+#index:
+#    path: /
+#    controller: App\Controller\DefaultController::index
+
+#calculator:
+#    path: /
+#    controller: App\Controller\CalculatorController::fooAction
+
