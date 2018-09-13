@@ -1,4 +1,4 @@
-# POC for ELMO Thrift RPC Microservices Framework over Sockets and HTTP #
+# POC for Thrift RPC Microservices Framework over Sockets and HTTP #
 
 Steps for communication via HTTP/Socket
 ------------------
