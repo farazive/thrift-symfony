@@ -2,7 +2,7 @@
 
 Steps
 ------------------
- 1. run `composer install`
+ 1. run `composer install` (if you get any error, esp. on windows, try running that command in windows command prompt. not git-bash)
  2. run the server with `bin/console server:run localhost:8080`
  3. in a separate terminal, browse to directory `cd ThriftClient`
  4. run the client `php PhpClient.php --http`
