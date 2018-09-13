@@ -2,21 +2,21 @@
 
 //namespace ThriftClient;
 
+use Overblog\ThriftBundle\Listener\ClassLoaderListener;
 use Thrift\ClassLoader\ThriftClassLoader;
-use Thrift\Protocol\TBinaryProtocol;
-use Thrift\Transport\TSocket;
-use Thrift\Transport\THttpClient;
-use Thrift\Transport\TBufferedTransport;
 use Thrift\Exception\TException;
+use Thrift\Protocol\TBinaryProtocol;
+use Thrift\Transport\TBufferedTransport;
+use Thrift\Transport\THttpClient;
+use Thrift\Transport\TSocket;
 use ThriftModel\Calculator\CalculatorClient;
 use ThriftModel\Calculator\InvalidOperation;
 use ThriftModel\Calculator\Operation;
 use ThriftModel\Calculator\Work;
-use Overblog\ThriftBundle\Listener\ClassLoaderListener;
 
-error_reporting(E_ALL);
+error_reporting( E_ALL );
 
-require __DIR__.'/../vendor/autoload.php';
+require __DIR__ . '/../vendor/autoload.php';
 
 $thriftClassLoader = new ThriftClassLoader();
 
@@ -55,49 +55,50 @@ ClassLoaderListener::registerClassLoader( $cacheDir );
 
 
 try {
-  if (array_search('--http', $argv)) {
-    $socket = new THttpClient('localhost', 8080, '/calculator');
-  } else {
-    $socket = new TSocket('localhost', 9090);
-  }
-  $transport = new TBufferedTransport($socket, 1024, 1024);
-  $protocol = new TBinaryProtocol($transport);
-  $client = new CalculatorClient($protocol);
+    if ( array_search( '--http', $argv ) ) {
+        $socket = new THttpClient( '127.0.0.1', 8000, '/calculator' );
+    }
+    else {
+        $socket = new TSocket( 'localhost', 9090 );
+    }
+    $transport = new TBufferedTransport( $socket, 1024, 1024 );
+    $protocol = new TBinaryProtocol( $transport );
+    $client = new CalculatorClient( $protocol );
 
-  $transport->open();
+    $transport->open();
 
-  $client->ping();
-  print "ping()\n";
+    $client->ping();
+    print "ping()\n";
 
-  $sum = $client->add(1,1);
-  print "1+1=$sum\n";
+    $sum = $client->add( 1, 1 );
+    print "1+1=$sum\n";
 
-  $work = new Work();
+    $work = new Work();
 
-  $work->op = Operation::DIVIDE;
-  $work->num1 = 1;
-  $work->num2 = 0;
+    $work->op = Operation::DIVIDE;
+    $work->num1 = 1;
+    $work->num2 = 0;
 
-  try {
-    $client->calculate(1, $work);
-    print "Whoa! We can divide by zero?\n";
-  } catch (InvalidOperation $io) {
-    print "InvalidOperation: $io->why\n";
-  }
+    try {
+        $client->calculate( 1, $work );
+        print "Whoa! We can divide by zero?\n";
+    } catch (InvalidOperation $io) {
+        print "InvalidOperation: $io->why\n";
+    }
 
-  $work->op = Operation::SUBTRACT;
-  $work->num1 = 15;
-  $work->num2 = 10;
-  $diff = $client->calculate(1, $work);
-  print "15-10=$diff\n";
+    $work->op = Operation::SUBTRACT;
+    $work->num1 = 15;
+    $work->num2 = 10;
+    $diff = $client->calculate( 1, $work );
+    print "15-10=$diff\n";
 
-  $log = $client->getStruct(1);
-  print "Log: $log->value\n";
+    $log = $client->getStruct( 1 );
+    print "Log: $log->value\n";
 
-  $transport->close();
+    $transport->close();
 
 } catch (TException $tx) {
-  print 'TException: '.$tx->getMessage()."\n";
+    print 'TException: ' . $tx->getMessage() . "\n";
 }
 
 ?>
