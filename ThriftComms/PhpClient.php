@@ -56,7 +56,7 @@ ClassLoaderListener::registerClassLoader( $cacheDir );
 
 try {
     if ( array_search( '--http', $argv ) ) {
-        $socket = new THttpClient( '127.0.0.1', 8000, '/calculator' );
+        $socket = new THttpClient( '127.0.0.1', 8000, '/route_thrift_calculator' );
     }
     else {
         $socket = new TSocket( 'localhost', 9090 );

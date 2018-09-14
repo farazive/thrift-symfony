@@ -34,14 +34,13 @@ overblog_thrift:
   compiler:
       path: "C:\\Users\\Faraz\\AppData\\Local\\Microsoft\\WindowsApps"
   services:
-    calculator:
+    service_calculator:
       definition: Calculator # *.thrift definition file name
       namespace: ThriftModel\Calculator
-      definitionPath: /thrift_definition/ # Path of the definition
+      definitionPath: /thrift_definition/ # Path of the definition ".thrift" files
       server: true    # Define if server class will be generated
 
   servers:
-    calculator:
-        service: calculator
-        handler: App\Thrift\Handler\CalculatorHandler
-
+    route_thrift_calculator:  # serves the microservice at this endpoint; this is route that will be hit
+        service: service_calculator
+        handler: App\Thrift\Handler\CalculatorHandler # the handler implements your logic

@@ -10,6 +10,9 @@ use ThriftModel\Calculator\Work;
 use ThriftModel\Shared\SharedStruct;
 
 /**
+ * WARNING: If you change this file, you need to run compsoer install again. Clearing cache without doing a composer
+ * install will cause an error
+ *
  * Class CalculatorHandler
  * @package App\Thrift\Handler
  */
